@@ -8,6 +8,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.carlosjordi.monthlychallenge01.presentation.game.GameScreen
 import com.carlosjordi.monthlychallenge01.ui.theme.MonthlyChallenge01Theme
 
 class MainActivity : ComponentActivity() {
@@ -16,7 +17,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MonthlyChallenge01Theme {
                 Surface(color = MaterialTheme.colors.background) {
-
+                    GameScreen()
                 }
             }
         }
