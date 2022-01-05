@@ -14,6 +14,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.carlosjordi.monthlychallenge01.domain.model.GameBoard
 import com.carlosjordi.monthlychallenge01.presentation.game.components.GameSlot
 import com.carlosjordi.monthlychallenge01.ui.theme.MonthlyChallenge01Theme
+import com.carlosjordi.monthlychallenge01.util.slotColor
 
 @Composable
 fun GameScreen(
@@ -30,16 +31,19 @@ fun GameScreen(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
+            val state = gameViewModel.state.value
             for (column in GameBoard.HORIZONTAL_RANGE) {
                 Column(
                     modifier = Modifier.clickable {
-                        gameViewModel.markSlot(column - 1)
+                        gameViewModel.onEvent(GameEvent.ClickColumn(column - 1))
                     },
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    for (each in GameBoard.VERTICAL_RANGE) {
+                    for (row in GameBoard.VERTICAL_RANGE) {
+                        val color = state.slots[column - 1][row - 1]
                         GameSlot(
-                            modifier = Modifier.size(40.dp)
+                            modifier = Modifier.size(40.dp),
+                            color = slotColor(playerColor = color)
                         )
                     }
                 }
