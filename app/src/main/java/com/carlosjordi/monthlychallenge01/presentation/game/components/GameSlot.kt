@@ -5,24 +5,25 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.carlosjordi.monthlychallenge01.ui.theme.MonthlyChallenge01Theme
 
 @Composable
 fun GameSlot(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    color: Color = MaterialTheme.colors.background
 ) {
     Box(
         modifier = modifier
             .fillMaxSize()
             .background(
-                color = MaterialTheme.colors.background,
+                color = color,
                 shape = RoundedCornerShape(percent = 50)
             )
     )
