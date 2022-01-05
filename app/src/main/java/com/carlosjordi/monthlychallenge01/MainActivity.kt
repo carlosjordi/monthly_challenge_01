@@ -5,9 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 import com.carlosjordi.monthlychallenge01.presentation.game.GameScreen
 import com.carlosjordi.monthlychallenge01.ui.theme.MonthlyChallenge01Theme
 

@@ -2,6 +2,7 @@ package com.carlosjordi.monthlychallenge01.presentation.game
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -9,11 +10,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.carlosjordi.monthlychallenge01.domain.model.GameBoard
 import com.carlosjordi.monthlychallenge01.presentation.game.components.GameSlot
 import com.carlosjordi.monthlychallenge01.ui.theme.MonthlyChallenge01Theme
 
 @Composable
-fun GameScreen() {
+fun GameScreen(
+    gameViewModel: GameViewModel = hiltViewModel()
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -25,11 +30,14 @@ fun GameScreen() {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            for (column in 1..7) {
+            for (column in GameBoard.HORIZONTAL_RANGE) {
                 Column(
+                    modifier = Modifier.clickable {
+                        gameViewModel.markSlot(column - 1)
+                    },
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    for (each in 1..6) {
+                    for (each in GameBoard.VERTICAL_RANGE) {
                         GameSlot(
                             modifier = Modifier.size(40.dp)
                         )
