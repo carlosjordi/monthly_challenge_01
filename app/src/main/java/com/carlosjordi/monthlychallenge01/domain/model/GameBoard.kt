@@ -59,18 +59,18 @@ object GameBoard {
             PlayerColor.RED -> {
                 if (redSlots.size < MINIMUM_SLOTS_TO_WIN) return false
                 redSlots.sort()
-                return checkHorizontalVictory(redSlots)
+                return checkHorizontalVictory(redSlots) || checkVerticalVictory(redSlots)
             }
             PlayerColor.YELLOW -> {
                 if (yellowSlots.size < MINIMUM_SLOTS_TO_WIN) return false
                 yellowSlots.sort()
-                return checkHorizontalVictory(yellowSlots)
+                return checkHorizontalVictory(yellowSlots) || checkVerticalVictory(yellowSlots)
             }
         }
     }
 
     /**
-     * Groups slots by his second digit.
+     * Groups slots by its second digit.
      *
      * Ej. If we had 14 15 24 33 35 42 44 45 55
      *
@@ -102,6 +102,49 @@ object GameBoard {
                 // if one on the digits is not consecutive, we reset
                 // the counter
                 if (digit + 1 != firstDigits[index + 1]) {
+                    successfullyConsecutiveCounter = 0
+                } else
+                    successfullyConsecutiveCounter++
+            }
+        }
+        return false
+    }
+
+    /**
+     * Groups slots by its first digit.
+     *
+     * Ej. If we had 14 15 24 33 35 42 44 45 55
+     *
+     * It'd be grouped this way
+     *
+     * 14,15 group '1'
+     *
+     * 24 group '2'
+     *
+     * 33,35 group '3'
+     *
+     * 42,44,45 group '4'
+     *
+     * 55 group '5'
+     */
+    private fun checkVerticalVictory(markedSlots: List<String>): Boolean {
+        val validGroups = markedSlots.groupBy { it.first() }.filter { group ->
+            group.value.size >= MINIMUM_SLOTS_TO_WIN
+        }
+        if (validGroups.isEmpty()) return false
+        // at this point, valid groups only contain groups of 4 or more
+        validGroups.forEach { group ->
+            val secondDigits = group.value.map { it.last().toString().toInt() }
+            var successfullyConsecutiveCounter = 0
+            for ((index, digit) in secondDigits.withIndex()) {
+                // 3 successful cycles mean the win condition was met
+                if (successfullyConsecutiveCounter == 3) return true
+                //if we reach the last digit with no win met, it means
+                // we can't win
+                if (index == secondDigits.lastIndex) return false
+                // if one on the digits is not consecutive, we reset
+                // the counter
+                if (digit + 1 != secondDigits[index + 1]) {
                     successfullyConsecutiveCounter = 0
                 } else
                     successfullyConsecutiveCounter++

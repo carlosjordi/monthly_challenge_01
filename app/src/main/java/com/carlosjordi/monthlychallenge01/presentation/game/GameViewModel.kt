@@ -23,7 +23,7 @@ class GameViewModel @Inject constructor() : ViewModel() {
                 markSlot(event.column)
                 if (GameBoard.checkVictory(currentPlayer)) Log.d(
                     "Victory",
-                    "Horizontal win $currentPlayer"
+                    "Horizontal|Vertical win $currentPlayer"
                 )
             }
             GameEvent.RestartGame -> {
