@@ -59,12 +59,18 @@ object GameBoard {
             PlayerColor.RED -> {
                 if (redSlots.size < MINIMUM_SLOTS_TO_WIN) return false
                 redSlots.sort()
-                return checkHorizontalVictory(redSlots) || checkVerticalVictory(redSlots)
+                return checkHorizontalVictory(redSlots) ||
+                        checkVerticalVictory(redSlots) ||
+                        checkDiagonalLeftToRightVictory(redSlots) ||
+                        checkDiagonalRightToLeftVictory(redSlots)
             }
             PlayerColor.YELLOW -> {
                 if (yellowSlots.size < MINIMUM_SLOTS_TO_WIN) return false
                 yellowSlots.sort()
-                return checkHorizontalVictory(yellowSlots) || checkVerticalVictory(yellowSlots)
+                return checkHorizontalVictory(yellowSlots) ||
+                        checkVerticalVictory(yellowSlots) ||
+                        checkDiagonalLeftToRightVictory(yellowSlots) ||
+                        checkDiagonalRightToLeftVictory(yellowSlots)
             }
         }
     }
@@ -149,6 +155,84 @@ object GameBoard {
                 } else
                     successfullyConsecutiveCounter++
             }
+        }
+        return false
+    }
+
+    /**
+     * We first filter the slots that are in a zone where a diagonal
+     * from right to left can be made which in this case is from
+     *
+     * first digit has to be between 0-3
+     *
+     * second digit has to be between 0-2
+     *
+     * Ej. If we had 14 15 24 33 35 42 44 45 55
+     *
+     * The valid slots are:
+     *
+     * none
+     */
+    private fun checkDiagonalLeftToRightVictory(markedSlots: List<String>): Boolean {
+        val validSlots = markedSlots.filter { slot ->
+            slot.first().toString().toInt() <= HORIZONTAL_SIZE - MINIMUM_SLOTS_TO_WIN &&
+                    slot.last().toString().toInt() <= VERTICAL_SIZE - MINIMUM_SLOTS_TO_WIN
+        }
+        if (validSlots.isEmpty()) return false
+
+        validSlots.forEach { slot ->
+            var firstDigit = slot.first().toString().toInt()
+            var secondDigit = slot.last().toString().toInt()
+            var successfullyConsecutiveCounter = 0
+            for (i in 1..3) {
+                firstDigit++
+                secondDigit++
+                val nextInDiagonal = "$firstDigit$secondDigit"
+                // we look up in the original list
+                val found = markedSlots.find { it == nextInDiagonal }
+                if (found != null) successfullyConsecutiveCounter++
+                else break
+            }
+            if (successfullyConsecutiveCounter == 3) return true
+        }
+        return false
+    }
+
+    /**
+     * We first filter the slots that are in a zone where a diagonal
+     * from left to right can be made which in this case is from
+     *
+     * first digit has to be between 3-6
+     *
+     * second digit has to be between 0-2
+     *
+     * Ej. If we had 14 15 24 33 35 42 44 45 55
+     *
+     * The valid slots are:
+     *
+     * 42
+     */
+    private fun checkDiagonalRightToLeftVictory(markedSlots: List<String>): Boolean {
+        val validSlots = markedSlots.filter { slot ->
+            slot.first().toString().toInt() >= HORIZONTAL_SIZE - MINIMUM_SLOTS_TO_WIN &&
+                    slot.last().toString().toInt() <= VERTICAL_SIZE - MINIMUM_SLOTS_TO_WIN
+        }
+        if (validSlots.isEmpty()) return false
+
+        validSlots.forEach { slot ->
+            var firstDigit = slot.first().toString().toInt()
+            var secondDigit = slot.last().toString().toInt()
+            var successfullyConsecutiveCounter = 0
+            for (i in 1..3) {
+                firstDigit--
+                secondDigit++
+                val nextInDiagonal = "$firstDigit$secondDigit"
+                // we look up in the original list
+                val found = markedSlots.find { it == nextInDiagonal }
+                if (found != null) successfullyConsecutiveCounter++
+                else break
+            }
+            if (successfullyConsecutiveCounter == 3) return true
         }
         return false
     }

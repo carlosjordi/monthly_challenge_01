@@ -1,6 +1,5 @@
 package com.carlosjordi.monthlychallenge01.presentation.game
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -21,10 +20,9 @@ class GameViewModel @Inject constructor() : ViewModel() {
             is GameEvent.ClickColumn -> {
                 val currentPlayer = state.value.currentPlayer
                 markSlot(event.column)
-                if (GameBoard.checkVictory(currentPlayer)) Log.d(
-                    "Victory",
-                    "Horizontal|Vertical win $currentPlayer"
-                )
+                if (GameBoard.checkVictory(currentPlayer)) {
+                    // current player won
+                }
             }
             GameEvent.RestartGame -> {
 
