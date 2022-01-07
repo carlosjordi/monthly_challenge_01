@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.carlosjordi.monthlychallenge01.domain.model.GameBoard
 import com.carlosjordi.monthlychallenge01.domain.model.PlayerColor
+import com.carlosjordi.monthlychallenge01.presentation.game.components.GameButton
 import com.carlosjordi.monthlychallenge01.presentation.game.components.GameSlot
 import com.carlosjordi.monthlychallenge01.presentation.game.components.ScoreboardSection
 import com.carlosjordi.monthlychallenge01.presentation.game.components.TurnSection
@@ -26,7 +27,7 @@ fun GameScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = MaterialTheme.colors.primary)
+            .background(color = MaterialTheme.colors.primaryVariant)
             .padding(16.dp)
     ) {
         val state = gameViewModel.state.value
@@ -35,12 +36,18 @@ fun GameScreen(
             verticalArrangement = Arrangement.Top
         ) {
             ScoreboardSection(
+                modifier = Modifier.weight(2f),
                 redScore = state.score[PlayerColor.RED] ?: 0,
                 yellowScore = state.score[PlayerColor.YELLOW] ?: 0
             )
-            TurnSection(playerColor = state.currentPlayer)
+            TurnSection(
+                modifier = Modifier.weight(2f),
+                playerColor = state.currentPlayer
+            )
             Row(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(14f),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -59,6 +66,21 @@ fun GameScreen(
                             )
                         }
                     }
+                }
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(4.dp)
+                    .weight(2f),
+                horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                GameButton(text = "Reiniciar Partida") {
+                    gameViewModel.onEvent(GameEvent.RestartGame)
+                }
+                GameButton(text = "Reiniciar Puntaje") {
+                    gameViewModel.onEvent(GameEvent.RestartScore)
                 }
             }
         }

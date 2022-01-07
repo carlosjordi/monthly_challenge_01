@@ -20,11 +20,12 @@ import com.carlosjordi.monthlychallenge01.ui.theme.PlayerYellow
 
 @Composable
 fun ScoreboardSection(
+    modifier: Modifier = Modifier,
     redScore: Int,
     yellowScore: Int
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(4.dp),
         horizontalArrangement = Arrangement.SpaceBetween,

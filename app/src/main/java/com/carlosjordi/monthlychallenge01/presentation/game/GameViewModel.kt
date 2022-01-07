@@ -27,10 +27,16 @@ class GameViewModel @Inject constructor() : ViewModel() {
                 }
             }
             GameEvent.RestartGame -> {
-
+                GameBoard.resetBoardGame()
+                _state.value = state.value.copy(
+                    currentPlayer = startingPlayer
+                )
             }
             GameEvent.RestartScore -> {
-
+                val score = mapOf(PlayerColor.RED to 0, PlayerColor.YELLOW to 0)
+                _state.value = state.value.copy(
+                    score = score.toMutableMap()
+                )
             }
         }
     }

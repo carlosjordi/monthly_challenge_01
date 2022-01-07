@@ -17,11 +17,12 @@ import com.carlosjordi.monthlychallenge01.util.slotColor
 
 @Composable
 fun TurnSection(
+    modifier: Modifier = Modifier,
     playerColor: PlayerColor,
     indicatorSize: Dp = 20.dp
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(4.dp),
         horizontalArrangement = Arrangement.Start,
