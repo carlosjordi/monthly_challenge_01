@@ -29,7 +29,7 @@ class GameViewModel @Inject constructor() : ViewModel() {
             GameEvent.RestartGame -> {
                 GameBoard.resetBoardGame()
                 _state.value = state.value.copy(
-                    currentPlayer = startingPlayer
+                    currentPlayer = PlayerColor.changeCurrentPlayerColor(state.value.currentPlayer)
                 )
             }
             GameEvent.RestartScore -> {
