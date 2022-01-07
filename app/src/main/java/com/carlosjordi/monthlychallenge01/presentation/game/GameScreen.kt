@@ -12,7 +12,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.carlosjordi.monthlychallenge01.domain.model.GameBoard
+import com.carlosjordi.monthlychallenge01.domain.model.PlayerColor
 import com.carlosjordi.monthlychallenge01.presentation.game.components.GameSlot
+import com.carlosjordi.monthlychallenge01.presentation.game.components.ScoreboardSection
+import com.carlosjordi.monthlychallenge01.presentation.game.components.TurnSection
 import com.carlosjordi.monthlychallenge01.ui.theme.MonthlyChallenge01Theme
 import com.carlosjordi.monthlychallenge01.util.slotColor
 
@@ -26,25 +29,35 @@ fun GameScreen(
             .background(color = MaterialTheme.colors.primary)
             .padding(16.dp)
     ) {
-        Row(
+        val state = gameViewModel.state.value
+        Column(
             modifier = Modifier.fillMaxSize(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+            verticalArrangement = Arrangement.Top
         ) {
-            val state = gameViewModel.state.value
-            for (column in GameBoard.HORIZONTAL_RANGE) {
-                Column(
-                    modifier = Modifier.clickable {
-                        gameViewModel.onEvent(GameEvent.ClickColumn(column - 1))
-                    },
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    for (row in GameBoard.VERTICAL_RANGE) {
-                        val color = state.slots[column - 1][row - 1]
-                        GameSlot(
-                            modifier = Modifier.size(40.dp),
-                            color = slotColor(playerColor = color)
-                        )
+            ScoreboardSection(
+                redScore = state.score[PlayerColor.RED] ?: 0,
+                yellowScore = state.score[PlayerColor.YELLOW] ?: 0
+            )
+            TurnSection(playerColor = state.currentPlayer)
+            Row(
+                modifier = Modifier.fillMaxSize(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                for (column in GameBoard.HORIZONTAL_RANGE) {
+                    Column(
+                        modifier = Modifier.clickable {
+                            gameViewModel.onEvent(GameEvent.ClickColumn(column - 1))
+                        },
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        for (row in GameBoard.VERTICAL_RANGE) {
+                            val color = state.slots[column - 1][row - 1]
+                            GameSlot(
+                                modifier = Modifier.size(40.dp),
+                                color = slotColor(playerColor = color)
+                            )
+                        }
                     }
                 }
             }
