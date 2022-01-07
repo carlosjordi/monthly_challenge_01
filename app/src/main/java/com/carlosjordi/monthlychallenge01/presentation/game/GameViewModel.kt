@@ -15,13 +15,15 @@ class GameViewModel @Inject constructor() : ViewModel() {
     val state: State<GameState>
         get() = _state
 
+    private var startingPlayer = PlayerColor.RED
+
     fun onEvent(event: GameEvent) {
         when (event) {
             is GameEvent.ClickColumn -> {
                 val currentPlayer = state.value.currentPlayer
                 markSlot(event.column)
                 if (GameBoard.checkVictory(currentPlayer)) {
-                    // current player won
+                    victoryAchieved(currentPlayer)
                 }
             }
             GameEvent.RestartGame -> {
@@ -39,5 +41,25 @@ class GameViewModel @Inject constructor() : ViewModel() {
                 currentPlayer = PlayerColor.changeCurrentPlayerColor(state.value.currentPlayer)
             )
         }
+    }
+
+    private fun victoryAchieved(currentPlayerColor: PlayerColor) {
+        GameBoard.resetBoardGame()
+
+        when (currentPlayerColor) {
+            PlayerColor.NO_COLOR -> {
+            }
+            PlayerColor.RED -> {
+                _state.value.score[PlayerColor.RED] = state.value.score[PlayerColor.RED]!! + 1
+            }
+            PlayerColor.YELLOW -> {
+                _state.value.score[PlayerColor.YELLOW] = state.value.score[PlayerColor.YELLOW]!! + 1
+            }
+        }
+        startingPlayer = if (startingPlayer == PlayerColor.RED) PlayerColor.YELLOW
+        else PlayerColor.RED
+        _state.value = state.value.copy(
+            currentPlayer = startingPlayer
+        )
     }
 }

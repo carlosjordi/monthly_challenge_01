@@ -75,6 +75,16 @@ object GameBoard {
         }
     }
 
+    fun resetBoardGame() {
+        redSlots.clear()
+        yellowSlots.clear()
+        for (column in HORIZONTAL_RANGE) {
+            for (row in VERTICAL_RANGE) {
+                slots[column - 1][row - 1] = PlayerColor.NO_COLOR
+            }
+        }
+    }
+
     /**
      * Groups slots by its second digit.
      *

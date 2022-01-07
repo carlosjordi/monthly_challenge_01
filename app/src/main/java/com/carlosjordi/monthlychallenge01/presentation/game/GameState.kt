@@ -6,7 +6,7 @@ import com.carlosjordi.monthlychallenge01.domain.model.PlayerColor
 data class GameState(
     val slots: Array<Array<PlayerColor>> = GameBoard.slots,
     var currentPlayer: PlayerColor = PlayerColor.RED,
-    val score: Map<PlayerColor, Int> = mapOf(
+    val score: MutableMap<PlayerColor, Int> = mutableMapOf(
         PlayerColor.RED to 0,
         PlayerColor.YELLOW to 0
     )
