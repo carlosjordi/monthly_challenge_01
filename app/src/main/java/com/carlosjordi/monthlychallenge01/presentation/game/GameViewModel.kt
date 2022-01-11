@@ -18,13 +18,17 @@ class GameViewModel @Inject constructor() : ViewModel() {
     var lastWinner: PlayerColor? = null
         private set
 
+    private var canPlay = true
+
     fun onEvent(event: GameEvent) {
         when (event) {
             is GameEvent.ClickColumn -> {
-                val currentPlayer = state.value.currentPlayer
-                markSlot(event.column)
-                if (GameBoard.checkVictory(currentPlayer)) {
-                    victoryAchieved(currentPlayer)
+                if (canPlay) {
+                    val currentPlayer = state.value.currentPlayer
+                    markSlot(event.column)
+                    if (GameBoard.checkVictory(currentPlayer)) {
+                        victoryAchieved(currentPlayer)
+                    }
                 }
             }
             GameEvent.RestartGame -> {
@@ -36,6 +40,7 @@ class GameViewModel @Inject constructor() : ViewModel() {
                     currentPlayer = startingPlayer,
                     winningTurn = false
                 )
+                canPlay = true
             }
             GameEvent.RestartScore -> {
                 val score = mapOf(PlayerColor.RED to 0, PlayerColor.YELLOW to 0)
@@ -50,6 +55,7 @@ class GameViewModel @Inject constructor() : ViewModel() {
         _state.value = state.value.copy(
             winningTurn = false
         )
+        canPlay = false
     }
 
     private fun markSlot(columnIndex: Int) {
@@ -61,7 +67,6 @@ class GameViewModel @Inject constructor() : ViewModel() {
     }
 
     private fun victoryAchieved(currentPlayerColor: PlayerColor) {
-        GameBoard.resetBoardGame()
 
         when (currentPlayerColor) {
             PlayerColor.NO_COLOR -> {
@@ -73,11 +78,8 @@ class GameViewModel @Inject constructor() : ViewModel() {
                 _state.value.score[PlayerColor.YELLOW] = state.value.score[PlayerColor.YELLOW]!! + 1
             }
         }
-        val startingPlayer = PlayerColor.changeCurrentPlayerColor(state.value.startingPlayer)
         lastWinner = currentPlayerColor
         _state.value = state.value.copy(
-            startingPlayer = startingPlayer,
-            currentPlayer = startingPlayer,
             winningTurn = true
         )
     }

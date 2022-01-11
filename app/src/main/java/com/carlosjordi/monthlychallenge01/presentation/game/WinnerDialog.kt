@@ -22,7 +22,6 @@ fun WinnerDialog(
             confirmButton = {
                 GameButton(text = "Volver a Jugar") {
                     playAgain()
-                    onDismissDialog()
                 }
             },
             text = {
