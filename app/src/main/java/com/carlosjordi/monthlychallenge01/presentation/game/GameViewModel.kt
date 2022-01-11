@@ -15,7 +15,8 @@ class GameViewModel @Inject constructor() : ViewModel() {
     val state: State<GameState>
         get() = _state
 
-    private var startingPlayer = PlayerColor.RED
+    var lastWinner: PlayerColor? = null
+        private set
 
     fun onEvent(event: GameEvent) {
         when (event) {
@@ -28,8 +29,12 @@ class GameViewModel @Inject constructor() : ViewModel() {
             }
             GameEvent.RestartGame -> {
                 GameBoard.resetBoardGame()
+                val startingPlayer =
+                    PlayerColor.changeCurrentPlayerColor(state.value.startingPlayer)
                 _state.value = state.value.copy(
-                    currentPlayer = PlayerColor.changeCurrentPlayerColor(state.value.currentPlayer)
+                    startingPlayer = startingPlayer,
+                    currentPlayer = startingPlayer,
+                    winningTurn = false
                 )
             }
             GameEvent.RestartScore -> {
@@ -39,6 +44,12 @@ class GameViewModel @Inject constructor() : ViewModel() {
                 )
             }
         }
+    }
+
+    fun onDismissDialog() {
+        _state.value = state.value.copy(
+            winningTurn = false
+        )
     }
 
     private fun markSlot(columnIndex: Int) {
@@ -62,10 +73,12 @@ class GameViewModel @Inject constructor() : ViewModel() {
                 _state.value.score[PlayerColor.YELLOW] = state.value.score[PlayerColor.YELLOW]!! + 1
             }
         }
-        startingPlayer = if (startingPlayer == PlayerColor.RED) PlayerColor.YELLOW
-        else PlayerColor.RED
+        val startingPlayer = PlayerColor.changeCurrentPlayerColor(state.value.startingPlayer)
+        lastWinner = currentPlayerColor
         _state.value = state.value.copy(
-            currentPlayer = startingPlayer
+            startingPlayer = startingPlayer,
+            currentPlayer = startingPlayer,
+            winningTurn = true
         )
     }
 }

@@ -83,6 +83,14 @@ fun GameScreen(
                     gameViewModel.onEvent(GameEvent.RestartScore)
                 }
             }
+            gameViewModel.lastWinner?.let { winner ->
+                WinnerDialog(
+                    isOpen = state.winningTurn,
+                    onDismissDialog = gameViewModel::onDismissDialog,
+                    winner = winner,
+                    playAgain = { gameViewModel.onEvent(GameEvent.RestartGame) }
+                )
+            }
         }
     }
 }
