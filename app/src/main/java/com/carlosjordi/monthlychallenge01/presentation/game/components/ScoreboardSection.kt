@@ -53,7 +53,7 @@ private fun Scoreboard(
     Text(
         text = "$text $score",
         color = color,
-        fontSize = 24.sp,
+        fontSize = 32.sp,
         fontWeight = FontWeight.Bold
     )
 }

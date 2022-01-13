@@ -85,10 +85,10 @@ fun GameScreen(
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                GameButton(text = "Reiniciar Partida") {
+                GameButton(text = "Jugar") {
                     gameViewModel.onEvent(GameEvent.RestartGame)
                 }
-                GameButton(text = "Reiniciar Puntaje") {
+                GameButton(text = "Puntaje") {
                     gameViewModel.onEvent(GameEvent.RestartScore)
                 }
             }
