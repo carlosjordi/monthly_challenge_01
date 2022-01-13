@@ -2,10 +2,9 @@ package com.carlosjordi.monthlychallenge01.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple200 = Color(0xFFBB86FC)
-val Purple500 = Color(0xFF6200EE)
-val Purple700 = Color(0xFF3700B3)
-val Teal200 = Color(0xFF03DAC5)
+val PlayerRed = Color(0xFFFF0000)
+val PlayerYellow = Color(0xFFFFFF00)
 
-val PlayerRed = Color(0xFFDA0303)
-val PlayerYellow = Color(0xFFDAD603)
+val MediumTurquoise = Color(0xFF39D4D4)
+val ViridianGreen = Color(0xFF05A1A1)
+val NeonBlue = Color(0xFF5C5FFA)

@@ -1,11 +1,14 @@
 package com.carlosjordi.monthlychallenge01.presentation.game
 
 import android.content.res.Configuration
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -60,9 +63,15 @@ fun GameScreen(
                     ) {
                         for (row in GameBoard.VERTICAL_RANGE) {
                             val color = state.slots[column - 1][row - 1]
+                            val animatedColor by animateColorAsState(
+                                targetValue = slotColor(color),
+                                animationSpec = tween(
+                                    durationMillis = 500
+                                )
+                            )
                             GameSlot(
                                 modifier = Modifier.size(40.dp),
-                                color = slotColor(playerColor = color)
+                                color = animatedColor
                             )
                         }
                     }
