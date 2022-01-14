@@ -36,7 +36,8 @@ fun TurnSection(
         )
         Spacer(modifier = Modifier.width(8.dp))
         GameSlot(
-            modifier = Modifier.size(indicatorSize),
+            size = indicatorSize,
+            showBorder = false,
             color = slotColor(playerColor)
         )
     }

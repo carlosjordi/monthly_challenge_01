@@ -3,6 +3,7 @@ package com.carlosjordi.monthlychallenge01.presentation.game
 import android.content.res.Configuration
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -11,9 +12,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.carlosjordi.monthlychallenge01.R
 import com.carlosjordi.monthlychallenge01.domain.model.GameBoard
 import com.carlosjordi.monthlychallenge01.domain.model.PlayerColor
 import com.carlosjordi.monthlychallenge01.presentation.game.components.GameButton
@@ -36,30 +41,32 @@ fun GameScreen(
         val state = gameViewModel.state.value
         Column(
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Top
+            verticalArrangement = Arrangement.SpaceBetween
         ) {
             ScoreboardSection(
-                modifier = Modifier.weight(2f),
                 redScore = state.score[PlayerColor.RED] ?: 0,
                 yellowScore = state.score[PlayerColor.YELLOW] ?: 0
             )
             TurnSection(
-                modifier = Modifier.weight(2f),
                 playerColor = state.currentPlayer
+            )
+            Image(
+                painter = painterResource(id = R.drawable.monthly_challenge_logo),
+                contentDescription = "Logo"
             )
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(14f),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.Bottom
             ) {
+                val deviceConfiguration = LocalConfiguration.current
+                val slotSize = (deviceConfiguration.screenWidthDp - 46) / 7
                 for (column in GameBoard.HORIZONTAL_RANGE) {
                     Column(
                         modifier = Modifier.clickable {
                             gameViewModel.onEvent(GameEvent.ClickColumn(column - 1))
-                        },
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                        }
                     ) {
                         for (row in GameBoard.VERTICAL_RANGE) {
                             val color = state.slots[column - 1][row - 1]
@@ -70,7 +77,7 @@ fun GameScreen(
                                 )
                             )
                             GameSlot(
-                                modifier = Modifier.size(40.dp),
+                                size = slotSize.dp,
                                 color = animatedColor
                             )
                         }
@@ -80,8 +87,7 @@ fun GameScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(4.dp)
-                    .weight(2f),
+                    .padding(4.dp),
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -109,6 +115,67 @@ fun GameScreen(
 @Composable
 fun PrevGameSlot() {
     MonthlyChallenge01Theme {
-        GameScreen()
+        GameScreenNoVM()
+    }
+}
+
+/**
+ * Only used for the previewer
+ */
+@Composable
+fun GameScreenNoVM() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = MaterialTheme.colors.primaryVariant)
+            .padding(16.dp)
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            ScoreboardSection(
+                redScore = 1,
+                yellowScore = 2
+            )
+            TurnSection(
+                playerColor = PlayerColor.RED
+            )
+            Image(
+                painter = painterResource(id = R.drawable.monthly_challenge_logo),
+                contentDescription = "Logo"
+            )
+            // board
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.Bottom
+            ) {
+                val deviceConfiguration = LocalConfiguration.current
+                val slotSize = (deviceConfiguration.screenWidthDp - 46) / 7
+                for (column in GameBoard.HORIZONTAL_RANGE) {
+                    Column {
+                        for (row in GameBoard.VERTICAL_RANGE) {
+                            GameSlot(
+                                size = slotSize.dp,
+                                color = Color.White
+                            )
+                        }
+                    }
+                }
+            }
+            // buttons
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(4.dp),
+                horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                GameButton(text = "Jugar") {}
+                GameButton(text = "Puntaje") {}
+            }
+        }
     }
 }
