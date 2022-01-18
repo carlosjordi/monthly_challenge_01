@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -59,7 +60,7 @@ fun GameScreen(
             )
             Image(
                 painter = painterResource(id = R.drawable.monthly_challenge_logo),
-                contentDescription = "Logo"
+                contentDescription = stringResource(R.string.cd_logo_image)
             )
             if (!gameViewModel.canPlay) {
                 Row(
@@ -72,7 +73,7 @@ fun GameScreen(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "Debe iniciar otra partida",
+                        text = stringResource(R.string.cant_play_message),
                         fontSize = 24.sp,
                         color = MaterialTheme.colors.secondary,
                         fontWeight = FontWeight.Bold,
@@ -122,10 +123,10 @@ fun GameScreen(
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                GameButton(text = "Jugar") {
+                GameButton(text = stringResource(R.string.play_button)) {
                     gameViewModel.onEvent(GameEvent.RestartGame)
                 }
-                GameButton(text = "Puntaje") {
+                GameButton(text = stringResource(R.string.score_button)) {
                     gameViewModel.onEvent(GameEvent.RestartScore)
                 }
             }

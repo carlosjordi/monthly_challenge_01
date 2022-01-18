@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">Monthly Challenge 01</string>
+    <string name="app_name" translatable="false">Monthly Challenge 01</string>
+    <string name="player_color_red">Red</string>
+    <string name="player_color_yellow">Yellow</string>
+    <string name="turn">Turn</string>
+    <string name="cd_logo_image">Connect 4 Logo</string>
+    <string name="cant_play_message">You should start another game</string>
+    <string name="play_button">Play</string>
+    <string name="score_button">Score</string>
+    <string name="winner_dialog_text">\n%1$s Player Wins!\n🏆🏆🏆</string>
 </resources>

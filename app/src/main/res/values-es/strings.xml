@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="player_color_red">Rojo</string>
+    <string name="player_color_yellow">Amarillo</string>
+    <string name="turn">Turno</string>
+    <string name="cd_logo_image">Conecta 4 Logo</string>
+    <string name="cant_play_message">Debe iniciar otra partida</string>
+    <string name="play_button">Jugar</string>
+    <string name="score_button">Puntaje</string>
+    <string name="winner_dialog_text">"\n¡Jugador %1$s Gana!\n🏆🏆🏆"</string>
+</resources>

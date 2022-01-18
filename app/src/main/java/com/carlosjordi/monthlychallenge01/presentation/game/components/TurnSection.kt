@@ -6,11 +6,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.carlosjordi.monthlychallenge01.R
 import com.carlosjordi.monthlychallenge01.domain.model.PlayerColor
 import com.carlosjordi.monthlychallenge01.ui.theme.MonthlyChallenge01Theme
 import com.carlosjordi.monthlychallenge01.util.slotColor
@@ -29,7 +31,7 @@ fun TurnSection(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "Turno",
+            text = stringResource(R.string.turn),
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             color = slotColor(playerColor)

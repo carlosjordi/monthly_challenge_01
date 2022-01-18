@@ -10,10 +10,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.carlosjordi.monthlychallenge01.R
 import com.carlosjordi.monthlychallenge01.ui.theme.MonthlyChallenge01Theme
 import com.carlosjordi.monthlychallenge01.ui.theme.PlayerRed
 import com.carlosjordi.monthlychallenge01.ui.theme.PlayerYellow
@@ -32,12 +34,12 @@ fun ScoreboardSection(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Scoreboard(
-            text = "Rojo",
+            text = stringResource(R.string.player_color_red),
             score = redScore,
             color = PlayerRed
         )
         Scoreboard(
-            text = "Amarillo",
+            text = stringResource(R.string.player_color_yellow),
             score = yellowScore,
             color = PlayerYellow
         )

@@ -6,9 +6,11 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import com.carlosjordi.monthlychallenge01.R
 import com.carlosjordi.monthlychallenge01.domain.model.PlayerColor
 import com.carlosjordi.monthlychallenge01.presentation.game.components.GameButton
 import com.carlosjordi.monthlychallenge01.ui.theme.PlayerRed
@@ -26,15 +28,16 @@ fun WinnerDialog(
         AlertDialog(
             onDismissRequest = onDismissDialog,
             confirmButton = {
-                GameButton(text = "Volver a Jugar") {
+                GameButton(text = stringResource(R.string.play_button)) {
                     playAgain()
                 }
             },
             text = {
-                val winnerPlayer = if (winner == PlayerColor.RED) "Rojo"
-                else "Amarillo"
+                val winnerPlayer =
+                    if (winner == PlayerColor.RED) stringResource(R.string.player_color_red)
+                    else stringResource(R.string.player_color_yellow)
                 Text(
-                    text = "\nJugador $winnerPlayer gana!\n\uD83C\uDFC6\uD83C\uDFC6\uD83C\uDFC6",
+                    text = stringResource(R.string.winner_dialog_text, winnerPlayer),
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
