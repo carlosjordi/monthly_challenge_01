@@ -18,7 +18,8 @@ class GameViewModel @Inject constructor() : ViewModel() {
     var lastWinner: PlayerColor? = null
         private set
 
-    private var canPlay = true
+    var canPlay = true
+        private set
 
     fun onEvent(event: GameEvent) {
         when (event) {
