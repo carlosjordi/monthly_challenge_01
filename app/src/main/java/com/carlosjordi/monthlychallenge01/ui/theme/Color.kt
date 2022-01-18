@@ -7,4 +7,4 @@ val PlayerYellow = Color(0xFFFFFF00)
 
 val MediumTurquoise = Color(0xFF39D4D4)
 val ViridianGreen = Color(0xFF05A1A1)
-val NeonBlue = Color(0xFF5C5FFA)
+val SapphireBlue = Color(0xFF306a9c)
